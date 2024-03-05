@@ -1,11 +1,11 @@
 import { Query } from '../';
-import { AuthorsTable, MysqlResponse } from '../models';
+import { AuthorsTable } from '../models';
 
-const find = (column: string, value: string) => Query<AuthorsTable[]>('SELECT * FROM authors WHERE ?? = ?', [column, value]);
+const find = (column: string, value: string) => Query<AuthorsTable[]>('SELECT * FROM Authors WHERE ?? = ?', [column, value]);
 
 const insert = (newUser: { email: string, password: string } ) => 
-//@ts-ignore
-Query<MysqlResponse>('INSERT INTO authors SET ?', newUser);
+
+Query('INSERT INTO Authors SET ?', [newUser]);
 
 
 export default {

@@ -14,7 +14,7 @@ export interface Blog {
     id: number;
     title: string;
     content: string;
-    auhtorid: Author["id"];
+    authorid: Author["id"];
     _created: string;
 }
 

@@ -1,0 +1,29 @@
+CREATE TABLE Authors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password CHAR(60) NOT NULL,
+    _created DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE Blogs (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(100) NOT NULL,
+  content TEXT NOT NULL,
+  author_id INT NOT NULL,
+  _created DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (author_id) REFERENCES Authors(id)
+);
+
+CREATE TABLE Tags (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE BlogTags (
+	blog_id INT,
+  tag_id INT,
+  FOREIGN KEY (blog_id) REFERENCES Blogs(id),
+  FOREIGN KEY (tag_id) REFERENCES Tags(id),
+  PRIMARY KEY (blog_id, tag_id)
+);
