@@ -7,17 +7,12 @@ import { Router } from "express";
 
 const router = Router();
 
-export interface ReqUser extends Request {
-  user?: {
-    id?: number;
-    email?: string;
-  };
-}
 
-router.post("/", passport.authenticate("local", {session: false}), async (req: ReqUser, res) => {
+
+router.post("/", passport.authenticate("local", {session: false}), async (req, res) => {
   try {
     const token = jwt.sign(
-      { userid: req.user.id, email: req.user.email, role: 1 },
+      { id: req.user.id, email: req.user.email },
       config.jwt.secret,
       { expiresIn: "15d" }
     );

@@ -1,30 +1,31 @@
 
 import React from 'react';
+import { useState, useEffect } from 'react';
 import BlogCard from '../components/BlogCard';
 import { Link } from 'react-router-dom';
+import { GET } from '../services/api-service';
+import { Blog } from '../types';
 
 const blogsData = [
-  { id: 1, title: 'Blog 1', content: 'Content for Blog 1', author: 'Author 1' },
-  { id: 2, title: 'Blog 2', content: 'Content for Blog 2', author: 'Author 2' },
   
 ];
 
+
 const Blogs = () => {
+  const [blogs, setBlogs] = useState<Blog[]>([])
+  useEffect(() => {
+    GET('/api/blogs').then(setBlogs)
+  },[])
   return (
     <div>
-       <nav className='navbar navbar-expand-lg'>
-    <div className="container-fluid">
-        <h3 className='title'>Blogs</h3>
-        <Link className='btn' to='/'>Home</Link>
-    </div>
-   </nav>
+   
       <div className="card-deck">
-        {blogsData.map((blog) => (
+        {blogs.map((blog) => (
           <BlogCard
             key={blog.id}
             title={blog.title}
             content={blog.content}
-            author={blog.author}
+            id={blog.id}
           />
         ))}
       </div>

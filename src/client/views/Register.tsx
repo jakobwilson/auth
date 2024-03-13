@@ -46,12 +46,7 @@ const Register = () => {
 
   return (
     <>
-      <nav className='navbar navbar-expand-lg'>
-        <div className="container-fluid">
-          <h3 className='title'>Register Page</h3>
-          <Link className='btn' to='/'>Home</Link>
-        </div>
-      </nav>
+      
       <main className='container'>
         <section className="row justify-content-center">
           <div className="col-12 col-md-4">

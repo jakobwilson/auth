@@ -15,19 +15,14 @@ const Login = () => {
       apiService('/auth/login', 'POST', { email, password })
           .then(token => {
             localStorage.setItem(TOKEN_KEY, token);
-            navigate('/pizza');
+            navigate('/blogs');
           })
           .catch(() => alert('invalid login'));
   }
 
   return (
    <>
-     <nav className='navbar navbar-expand-lg'>
-    <div className="container-fluid">
-        <h3 className='title'>Login Page</h3>
-        <Link className='btn' to='/'>Home</Link>
-    </div>
-   </nav>
+   
    <main className='container'>
     <section className="row justify-content-center">
       <div className="col-12 col-md-4">

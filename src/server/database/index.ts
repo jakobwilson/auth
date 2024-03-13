@@ -1,5 +1,6 @@
 import * as mysql from 'mysql';
 import config from '../config';
+import blogs from './queries/blogs';
 import authors from './queries/authors'
 
 interface Obj {
@@ -19,5 +20,6 @@ export const Query = <T = mysql.OkPacket>(query: string, values?: Array<string |
 }
 
 export default {
+    blogs,
     authors
 }

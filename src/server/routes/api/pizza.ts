@@ -10,7 +10,7 @@ router.get('/', tokenCheck, (req: ReqUser, res) => {
     try {
  
       
-        res.json({message: `Enjoy your Pizza Time ${req.user.email}`});
+        res.json({message: `You may now view the blogs! ${req.user.email}`});
         
     } catch (error) {
         console.log(error);

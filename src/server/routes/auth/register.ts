@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
     newUser.password = generateHash(newUser.password);
     const result = await database.authors.insert(newUser);
     const token = jwt.sign(
-      { userid: result.insertId, email: newUser.email, role: 1 },
+      { id: result.insertId, email: newUser.email },
       config.jwt.secret,
       { expiresIn: "15d" }
     );

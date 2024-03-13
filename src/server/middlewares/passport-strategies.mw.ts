@@ -29,11 +29,15 @@ passport.use(
 );
 
 interface Payload {
-  userid: number;
+  id: number;
   email: string;
-  role: number;
 }
-
+export {}
+declare global {
+  namespace Express{
+    export interface User extends Payload{}
+  }
+}
 passport.use(new PassportJWT.Strategy({
   jwtFromRequest: PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: config.jwt.secret

@@ -1,61 +1,61 @@
-export const TOKEN_KEY = 'token';
-export async function apiService<T = any>(uri: string, method: string = 'GET', data?: {}) {
+import Swal from "sweetalert2";
 
+type ValidMethods = "GET" | "POST" | "PUT" | "DELETE";
 
-    const TOKEN = localStorage.getItem(TOKEN_KEY);
+export const TOKEN_KEY = "token";
 
-    const headers: HeadersInit = {
-        'Content-Type': 'application/json'
-    }
-
-    const fetchOptions: IFetchOptions = {
+export async function apiService<T = any>(url: string, method: ValidMethods = "GET", rawData?: unknown) {
+    const headers: HeadersInit = {};
+    const options: RequestInit = {
         method,
         headers,
-        body: JSON.stringify(data)
+    };
+
+    if (method === "POST" || method === "PUT") {
+        headers["Content-Type"] = "application/json";
+        options.body = JSON.stringify(rawData);
     }
 
-    if (TOKEN) {
-        headers ['Authorization'] = `Bearer ${TOKEN}`
+    const token = localStorage.getItem(TOKEN_KEY);
+
+    if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
     }
 
-    if (method === 'GET') {
-        delete headers['Content-Type'];
-        delete fetchOptions.body;
-    }
+    return new Promise<T>(async (resolve) => {
+        try {
+            const res = await fetch(url, options);
+            const data = await res.json();
 
-    try {
-        const res = await fetch(uri, fetchOptions);
+            if (res.ok) {
+                resolve(data);
 
-        if (res.status === 400) {
-            throw new Error('check fetch options for any errors');
+                if (data.message) {
+                    Swal.fire({
+                        icon: "success",
+                        text: data.message,
+                    });
+                }
+            } else {
+                console.error(data);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oh no",
+                    text: data.message,
+                });
+            }
+        } catch (error) {
+            console.error(error);
+            Swal.fire({
+                icon: "error",
+                title: "Oh no",
+                text: (error as Error).message,
+            });
         }
-
-        if (res.status === 401) {
-            throw new Error('no token, expired token, or server could not validate token');
-        }
-
-        if (res.status === 404) {
-            throw new Error('the server endpoint path was not found');
-        }
-
-        if (res.status === 500) {
-            throw new Error('server blew up, check the terminal logs');
-        }
-
-        if (res.ok) {
-            return <T>await res.json();
-        }
-        
-    } catch (error) {
-        console.error('[error in apiService]', error.message);
-        throw error;
-    }
-
+    });
 }
 
-interface IFetchOptions {
-    method: string;
-    headers?: HeadersInit;
-    body?: string;
-}
-
+export const GET = <T = any>(url: string) => apiService<T>(url);
+export const POST = <T = any>(url: string, data: unknown) => apiService<T>(url, "POST", data);
+export const PUT = <T = any>(url: string, data: unknown) => apiService<T>(url, "PUT", data);
+export const DELETE = <T = any>(url: string) => apiService<T>(url, "DELETE");
