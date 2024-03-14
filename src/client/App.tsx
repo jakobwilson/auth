@@ -10,6 +10,7 @@ import Blogs from './views/Blogs';
 import PostBlog from './views/PostBlog';
 import BlogDetails from './views/BlogDetails';
 import Navbar from './components/Navbar';
+import EditBlog from './views/EditBlog';
 
 
 const App = (props: AppProps) => {
@@ -23,6 +24,7 @@ const App = (props: AppProps) => {
 		  <Route path="/blogs" element={<PrivateWrapper><Blogs /></PrivateWrapper>} />
 		  <Route path="/postblog" element={<PrivateWrapper><PostBlog /></PrivateWrapper>}></Route>
 		  <Route path="/blogs/:id" element={<PrivateWrapper><BlogDetails /></PrivateWrapper>}></Route>
+		  <Route path="/blogs/:id/edit" element={<PrivateWrapper><EditBlog /></PrivateWrapper>}></Route>
 		  <Route path="/pizza" element={<PrivateWrapper><Pizza /></PrivateWrapper>} />
 		  <Route path="*" element={<NotFound />} />
 		</Routes>

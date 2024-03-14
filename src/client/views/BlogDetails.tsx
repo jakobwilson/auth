@@ -22,7 +22,7 @@ const BlogDetails = () => {
             <div className="card shadow-lg p-3 m-2">
               <h1>{blog.title}</h1>
               <h2>{blog.content}</h2>
-              <Link className="btn m-2" to={`/blogs/${blog.id}/edit`}>Edit</Link>
+              <Link className="btn m-2 detail-btn" to={`/blogs/${blog.id}/edit`}>Edit</Link>
             </div>
               <Link className="btn m-2" to='/'>Back</Link>
           </div>

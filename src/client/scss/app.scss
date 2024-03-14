@@ -55,6 +55,18 @@ body {
 	color: black;
 }
 
+.detail-btn {
+	display: inline-block;
+	background: transparent;
+	color: black;
+	border: 2px solid black;
+}
+
+.detail-btn:hover {
+	background: #202731;
+	color: #eee;
+}
+
 .navbar .btn {
 	margin: 10px; 
   }
